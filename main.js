@@ -94,6 +94,8 @@ for (let i = 0; i < posts.length; i++) {
     postFooter.classList.add('post__footer');
     post.appendChild(postFooter);
 
+    let likeButton = document.createElement('button');
+
     for (const key in element) {
 
         if(key === 'author'){
@@ -118,34 +120,39 @@ for (let i = 0; i < posts.length; i++) {
 
         } else if (key === 'likes'){
 
-            postFooter.innerHTML = `
-                <div class="likes js-likes">
-                    <div class="likes__cta">
-                        <a class="like-button js-like-button" href="#${element.id}" data-postid="${element.id}">
-                            <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                            <span class="like-button__label">Mi Piace</span>
-                        </a>
-                    </div>
-                    <div class="likes__counter">
-                        Piace a <b id="like-counter-${element.id}" class="js-likes-counter">${element[key]}</b> persone
-                    </div>
-                </div>`
-        }
+            let likes = document.createElement('div');
+            likes.classList.add('likes','js-likes');
+            postFooter.appendChild(likes);
 
-        let likeButton = document.querySelectorAll('.like-button');
+            let likesCta = document.createElement('div');
+            likesCta.classList.add('likes__cta','likes');
+            likes.appendChild(likesCta);
 
-        likeButton.forEach(button => {
-            button.addEventListener('click', () => {
-                button.classList.add('like-button--liked')
-                element.likes = element.likes + 1;
-
-                let likes = document.getElementById(`like-counter-${element.id}`);
-                likes.innerHTML = `${element.likes}`;
-                
-            });
             
-        });
-        
+            likeButton.classList.add('like-button','js-like-button',);
+            likeButton.setAttribute('id',`${element.id}`)
+            likeButton.innerHTML = `<i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+            <span class="like-button__label">Mi Piace</span>`
+            likesCta.appendChild(likeButton);
+
+            let likesCounter = document.createElement('div');
+            likesCounter.classList.add('likes__counter');
+            likesCounter.innerHTML = `Piace a <b id="like-counter-${element.id}" class="js-likes-counter">${element[key]}</b> persone`;
+            likesCta.appendChild(likesCounter);
+
+
+            let curentLikeButton = document.getElementById(element.id);
+
+            curentLikeButton.addEventListener('click',
+             function(){
+
+                this.classList.add('like-button--liked')
+                element.likes++;
+                
+                let newLikes = document.getElementById(`like-counter-${element.id}`)
+                newLikes.innerHTML = `${element.likes}`
+            })
+        }
     }
 }
 

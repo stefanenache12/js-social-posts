@@ -102,6 +102,7 @@ h1 {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    flex-direction: row;
 }
 
 .like-button {
@@ -123,4 +124,8 @@ h1 {
 .like-button--liked {
     color: #0CD977;
     cursor: default;
+}
+
+a {
+    cursor: pointer;
 }
