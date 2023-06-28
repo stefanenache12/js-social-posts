@@ -91,6 +91,7 @@ h1 {
 
 .post__image {
     margin-bottom: 16px;
+    width: 100%;
 }
 
 .post__image img {

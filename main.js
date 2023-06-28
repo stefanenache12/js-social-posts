@@ -55,3 +55,82 @@ const posts = [
         "created": "2021-03-05"
     }
 ];
+
+const postsContainer = document.getElementById('container');
+
+for (let i = 0; i < posts.length; i++) {
+    const element = posts[i];
+    
+    let post = document.createElement('div');
+    post.classList.add('post');
+    postsContainer.appendChild(post);
+
+    let postHeader = document.createElement('div');
+    postHeader.classList.add('post__header');
+    post.appendChild(postHeader);
+
+    let postMeta = document.createElement('div');
+    postMeta.classList.add('post-meta');
+    postHeader.appendChild(postMeta);
+
+    let postMetaIcon = document.createElement('div');
+    postMetaIcon.classList.add('post-meta__icon');
+    postMeta.appendChild(postMetaIcon);
+
+    let postMetaData = document.createElement('div');
+    postMetaData.classList.add('post-meta__data');
+    postMeta.appendChild(postMetaData);
+
+    let postText = document.createElement('div');
+    postText.classList.add('post__text');
+    post.appendChild(postText);
+
+    let postImage = document.createElement('div');
+    postImage.classList.add('post__image');
+    post.appendChild(postImage);
+
+    let postFooter = document.createElement('div');
+    postFooter.classList.add('post__footer');
+    post.appendChild(postFooter);
+
+    for (const key in element) {
+
+        if(key === 'author'){
+
+            postMetaIcon.innerHTML = `
+            <img class="profile-pic" src="${element.author.image}"
+             alt="${element.author.name}">`;
+
+            postMetaData.innerHTML = `
+            <div class="post-meta__author">${element.author.name}</div>
+            <div class="post-meta__time">${element.created}</div>`;
+
+        } else if(key === 'content'){
+            
+            postText.innerHTML = `${element[key]}`;
+
+        } else if (key === 'media'){
+
+            let imgPost = document.createElement('img');
+            imgPost.src = element[key];
+            postImage.appendChild(imgPost);
+
+        } else if (key === 'likes'){
+
+            postFooter.innerHTML = `
+            <div class="likes js-likes">
+                <div class="likes__cta">
+                    <a class="like-button  js-like-button" href="#" data-postid="${element.id}">
+                        <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                        <span class="like-button__label">Mi Piace</span>
+                    </a>
+                </div>
+                <div class="likes__counter">
+                    Piace a <b id="like-counter-${element.id}" class="js-likes-counter">${element[key]}</b> persone
+                </div>
+            </div>`
+        }
+       
+    }
+
+}
