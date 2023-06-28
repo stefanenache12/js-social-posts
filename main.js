@@ -57,6 +57,7 @@ const posts = [
 ];
 
 const postsContainer = document.getElementById('container');
+const likes = [];
 
 for (let i = 0; i < posts.length; i++) {
     const element = posts[i];
@@ -118,19 +119,33 @@ for (let i = 0; i < posts.length; i++) {
         } else if (key === 'likes'){
 
             postFooter.innerHTML = `
-            <div class="likes js-likes">
-                <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="#" data-postid="${element.id}">
-                        <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                        <span class="like-button__label">Mi Piace</span>
-                    </a>
-                </div>
-                <div class="likes__counter">
-                    Piace a <b id="like-counter-${element.id}" class="js-likes-counter">${element[key]}</b> persone
-                </div>
-            </div>`
+                <div class="likes js-likes">
+                    <div class="likes__cta">
+                        <a class="like-button js-like-button" href="#${element.id}" data-postid="${element.id}">
+                            <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                            <span class="like-button__label">Mi Piace</span>
+                        </a>
+                    </div>
+                    <div class="likes__counter">
+                        Piace a <b id="like-counter-${element.id}" class="js-likes-counter">${element[key]}</b> persone
+                    </div>
+                </div>`
         }
-       
-    }
 
+        let likeButton = document.querySelectorAll('.like-button');
+
+        likeButton.forEach(button => {
+            button.addEventListener('click', () => {
+                button.classList.add('like-button--liked')
+                element.likes = element.likes + 1;
+
+                let likes = document.getElementById(`like-counter-${element.id}`);
+                likes.innerHTML = `${element.likes}`;
+                
+            });
+            
+        });
+        
+    }
 }
+
